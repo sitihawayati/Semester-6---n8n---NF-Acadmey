@@ -1,0 +1,113 @@
+{
+  "name": "Tugas 1 Agen AI tanpa coding_Siti Hawayati_STT Nurul Fikri",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -208,
+        48
+      ],
+      "id": "1817a183-132a-4cb3-9d3a-fae85e6953ac",
+      "name": "When chat message received",
+      "webhookId": "0564d045-f1ef-4853-b151-ee82f00cd13e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah agen AI yang membantu menjawab pertanyaan pengguna tentang NF Academy (Nurul Fikri Academy). NF Academy adalah lembaga pendidikan dan pelatihan vokasi di bidang teknologi dan digital yang berada di bawah naungan grup Nurul Fikri. Lembaga ini berfokus pada peningkatan keterampilan digital, teknologi informasi, dan kesiapan kerja di industri teknologi. NF Academy menyediakan berbagai program pelatihan yang dirancang untuk membantu peserta meningkatkan keterampilan digital dan mempersiapkan diri menghadapi dunia kerja di bidang teknologi.\nBeberapa program pelatihan utama yang tersedia di NF Academy antara lain:\n1. Web Developer\n   Program pelatihan yang mempelajari cara membuat dan mengembangkan website. Peserta akan belajar tentang pemrograman web, pengembangan aplikasi web, serta praktik membuat proyek website.\n\n2. Digital Marketing\n   Program pelatihan yang mempelajari strategi pemasaran digital menggunakan berbagai platform online seperti media sosial, website, dan mesin pencari untuk meningkatkan promosi produk atau bisnis.\n\n3. Codeless Data Science\n   Program pelatihan yang mempelajari analisis data dan pengolahan data tanpa harus menulis banyak kode pemrograman. Peserta akan belajar menggunakan tools yang memudahkan analisis data.\n\n4. AI for Business\n   Program pelatihan yang mempelajari pemanfaatan teknologi Artificial Intelligence (AI) untuk membantu proses bisnis, meningkatkan efisiensi kerja, dan mendukung pengambilan keputusan berbasis data.\n\nKeunggulan belajar di NF Academy antara lain:\n- Materi pelatihan berbasis kebutuhan industri\n- Pembelajaran berbasis praktik dan proyek\n- Dibimbing oleh mentor berpengalaman\n-Mendapatkan sertifikat setelah menyelesaikan pelatihan\n\nTugas kamu adalah membantu pengguna mendapatkan informasi mengenai:\n- Program pelatihan di NF Academy\n- Penjelasan tentang jurusan atau bidang pelatihan\n- Informasi umum mengenai NF Academy\n- Cara mengikuti atau mendaftar pelatihan\n\nJawablah pertanyaan pengguna dengan bahasa yang sederhana, jelas, dan mudah dipahami.\n\nJika kamu tidak memiliki informasi yang diminta oleh pengguna, jangan mengarang jawaban. Katakan bahwa informasi tersebut tidak tersedia dan arahkan pengguna untuk melihat informasi resmi di website berikut:\nhttps://nfacademy.id/"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        48
+      ],
+      "id": "1be2eed7-9887-4b6d-a70f-574e6c755351",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        256
+      ],
+      "id": "4704b658-a07b-43fa-a023-948af025d6e8",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "TU7oXv6rE5YDQK1J",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        400
+      ],
+      "id": "7f20e943-a984-4efb-a367-dd39cd903d61",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "fd935b9d-9992-42b4-a19d-ca2b431a9693",
+  "meta": {
+    "instanceId": "5ad5895844f3f3ffe5d1a714ef68d7e434e40aec8d5c2588381078f838c82597"
+  },
+  "id": "BXonS8WQlUiGvDeg",
+  "tags": []
+}
