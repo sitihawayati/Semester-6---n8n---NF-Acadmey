@@ -1,0 +1,159 @@
+{
+  "name": "Tugas 2 Pengembangan Agen AI tanpa Coding_Siti Hawayati",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah Bot Informasi Pelatihan NFA yang membantu pengguna mendapatkan informasi tentang program pelatihan di NFA.\nData pelatihan tersedia di Google Sheets dan dapat diakses menggunakan tool **\"Get row(s) in sheet in Google Sheets\"**.\nTugas kamu adalah menjawab pertanyaan pengguna tentang:\n* Jenis program pelatihan\n* Nama pelatihan\n* Deskripsi pelatihan\n* Harga atau biaya pelatihan\nAturan:\n1. Gunakan data dari Google Sheets untuk menjawab pertanyaan pengguna.\n2. Gunakan tool **\"Get row(s) in sheet in Google Sheets\"** untuk mengambil data pelatihan.\n3. Jangan membuat atau menambahkan informasi yang tidak ada di data.\n4. Jika data tidak ditemukan, beri tahu pengguna bahwa data tidak tersedia.\n5. Jawab menggunakan bahasa Indonesia yang jelas, singkat, dan ramah.\n6. Jika pengguna meminta daftar pelatihan, tampilkan semua pelatihan yang tersedia di data."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -400,
+        -208
+      ],
+      "id": "6e93ef58-0934-438c-8eaa-1b1609e52078",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        48
+      ],
+      "id": "151826c4-3e75-453b-8433-efb64f82c2cc",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "TU7oXv6rE5YDQK1J",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        144
+      ],
+      "id": "7d2e084f-f17a-47b3-9d7a-9b20d1780010",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1K4JCgnDPOxhm-oIOdj3hvaoBEraRc_cBWnwJHabXdLk",
+          "mode": "list",
+          "cachedResultName": "n8n 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K4JCgnDPOxhm-oIOdj3hvaoBEraRc_cBWnwJHabXdLk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1K4JCgnDPOxhm-oIOdj3hvaoBEraRc_cBWnwJHabXdLk/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -160,
+        80
+      ],
+      "id": "dbba9a3d-9717-4de9-b59a-f8a9e2303b1e",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DZ7gwPKzjEukU7o5",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo👋\nSaya adalah Bot Informasi Pelatihan NFA yang siap membantu Anda mendapatkan informasi mengenai berbagai program pelatihan yang tersedia di NFA. Anda dapat menanyakan tentang jenis program pelatihan, nama pelatihan, deskripsi materi yang dipelajari, serta harga atau biaya pelatihan. Silakan ajukan pertanyaan Anda, misalnya menanyakan daftar pelatihan yang tersedia, materi dari suatu pelatihan, atau biaya dari program pelatihan tertentu.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -624,
+        -208
+      ],
+      "id": "59f11687-2dda-43f9-a0d6-2c09ddb35b8a",
+      "name": "When chat message received",
+      "webhookId": "70c3ab43-bef2-4399-97fb-d1ee60cb6453"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "4badfeb1-b490-4a76-b52a-ea84cc0fa9b1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5ad5895844f3f3ffe5d1a714ef68d7e434e40aec8d5c2588381078f838c82597"
+  },
+  "id": "CPs1losFkKBM7d3z",
+  "tags": []
+}
